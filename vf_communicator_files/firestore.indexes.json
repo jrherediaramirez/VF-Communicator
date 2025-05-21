@@ -1,0 +1,15 @@
+
+{
+  "indexes": [
+    {
+      "collectionGroup": "batches",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "lastUpdated", "order": "DESCENDING" },
+        { "fieldPath": "startedAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

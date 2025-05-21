@@ -8,10 +8,11 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-// !! REPLACE WITH THE UID OF THE USER YOU CREATED IN FIREBASE AUTH !!
-const uid = 'S9Qai54mVTRrl0QGv7qpZjQZ7dL2';
+// !! REPLACE WITH THE UID OF THE **NEW QA USER** !!
+const uid = 'PfisurrhJkY3fpaP9swCRs3DOul2'; 
+
 const customClaims = {
-  role: 'processor', // or 'qa', 'admin'
+  role: 'qa', // <--- SET THE ROLE TO 'qa'
 };
 
 admin.auth().setCustomUserClaims(uid, customClaims)
@@ -22,9 +23,9 @@ admin.auth().setCustomUserClaims(uid, customClaims)
   })
   .then((userRecord) => {
     console.log('Verified user claims:', userRecord.customClaims);
-    process.exit(0);
+    process.exit(0); // Exit successfully
   })
   .catch((error) => {
     console.error('Error setting custom claims:', error);
-    process.exit(1);
+    process.exit(1); // Exit with error
   });
