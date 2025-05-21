@@ -20,16 +20,16 @@ const BatchTable = ({ batches, title, isLoading, error }) => {
     <div className={styles.batchTableContainer}>
       {title && <h2>{title}</h2>}
       <table className={styles.batchTable}>
-        <thead>
-          <tr>
-            <th>Formula</th>
-            <th>Batch No.</th>
-            <th>Deck</th>
-            <th>Status</th>
-            <th>Last Updated</th>
-            <th>Actions</th> {/* Placeholder for future actions */}
-          </tr>
-        </thead>
+          <thead>
+            <tr>
+              <th>Formula</th>
+              <th>Batch No.</th>
+              <th>Deck</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+              <th>Actions</th>{/* No space before closing tr */}
+            </tr>
+          </thead>
         <tbody>
           {batches.map((batch) => (
             <BatchRow key={batch.id} batch={batch} />
