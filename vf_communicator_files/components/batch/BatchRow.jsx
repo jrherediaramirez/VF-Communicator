@@ -1,33 +1,18 @@
 // components/batch/BatchRow.jsx
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // Keep useState for isLoading, error if needed locally
 import { useAuth } from '../../contexts/AuthContext';
 import { USER_ROLES, BATCH_STATUSES } from '../../constants';
 import { updateBatchStatus, startQATesting } from '../../lib/firebase/firestore';
-// import BatchDetailDrawer from './BatchDetailDrawer'; // Will create this
-import styles from './BatchRow.module.css'; // You'll need to create/update this
+// BatchDetailDrawer is NO LONGER imported or used directly here
+import styles from './BatchRow.module.css';
 
-// Placeholder for BatchDetailDrawer until it's created
-const BatchDetailDrawer = ({ batch, isOpen, onClose }) => {
-  if (!isOpen) return null;
-  return (
-    <div style={{ position: 'fixed', top: 0, right: 0, width: '400px', height: '100vh', backgroundColor: 'white', zIndex: 1000, padding: '20px', borderLeft: '1px solid #ccc', overflowY: 'auto' }}>
-      <h2>Batch Details: {batch.formula} - {batch.batchNumber}</h2>
-      <p>Status: {batch.status}</p>
-      <p>ID: {batch.id}</p>
-      <p>Processor: {batch.currentProcessorId || 'N/A'}</p>
-      <p>QA: {batch.qaCurrentId || 'N/A'}</p>
-      <p><em>(Sample List and Actions will go here)</em></p>
-      <button onClick={onClose} style={{ marginTop: '20px' }}>Close Drawer</button>
-    </div>
-  );
-};
+// The placeholder BatchDetailDrawer definition that was here should be completely removed.
 
-
-const BatchRow = ({ batch }) => {
+const BatchRow = ({ batch, onOpenDrawer }) => { // Add onOpenDrawer prop
   const { user, role } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // isDrawerOpen state is REMOVED
 
   const handleCompleteMixing = async () => {
     if (!user || role !== USER_ROLES.PROCESSOR) return;
@@ -35,7 +20,6 @@ const BatchRow = ({ batch }) => {
     setError('');
     try {
       await updateBatchStatus(batch.id, BATCH_STATUSES.COMPLETE, user.uid);
-      // Status on UI will update via realtime listener
     } catch (err) {
       setError(err.message || 'Failed to complete mixing.');
       console.error(err);
@@ -61,7 +45,6 @@ const BatchRow = ({ batch }) => {
     return timestamp.toDate ? timestamp.toDate().toLocaleString() : new Date(timestamp).toLocaleString();
   };
 
-
   return (
     <>
       <tr className={styles.batchRow}>
@@ -72,7 +55,7 @@ const BatchRow = ({ batch }) => {
         <td>{formatTimestamp(batch.lastUpdated)}</td>
         <td>
           <button
-            onClick={() => setIsDrawerOpen(true)}
+            onClick={() => onOpenDrawer(batch.id)} // Call the passed-in handler
             className={`${styles.actionButton} ${styles.detailsButton}`}
             disabled={isLoading}
           >
@@ -96,16 +79,11 @@ const BatchRow = ({ batch }) => {
               {isLoading ? 'Starting...' : 'Start Testing'}
             </button>
           )}
-          {/* More actions can be added here based on role and batch status */}
         </td>
       </tr>
       {error && <tr className={styles.rowError}><td colSpan="6">{error}</td></tr>}
 
-      <BatchDetailDrawer
-        batch={batch}
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-      />
+      {/* BatchDetailDrawer component is REMOVED from here */}
     </>
   );
 };
