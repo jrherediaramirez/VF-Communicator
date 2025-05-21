@@ -1,53 +1,96 @@
 // contexts/AuthContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
-// We will import Firebase auth methods later
-// import { auth } from '../lib/firebase/config';
-// import { onAuthStateChanged } from 'firebase/auth';
+import {
+  signInWithEmail,
+  signInWithGoogle,
+  signOutUser,
+  onAuthStateChangedWrapper,
+  // signUpWithEmail, // Import if you implement sign-up
+} from '../lib/firebase/auth';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Can be user object or null
-  const [role, setRole] = useState(null);   // e.g., 'processor', 'qa', 'admin'
-  const [loading, setLoading] = useState(true); // To handle initial auth state check
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
 
-  // useEffect(() => {
-  //   // This is where Firebase onAuthStateChanged listener will go
-  //   // For now, simulate loading and no user
-  //   const timer = setTimeout(() => {
-  //     setUser(null);
-  //     setRole(null);
-  //     setLoading(false);
-  //   }, 1000); // Simulate async check
-  //
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  // Placeholder: Simulate loading ending
   useEffect(() => {
-    setLoading(false);
+    const unsubscribe = onAuthStateChangedWrapper(
+      ({ user: authUser, role: userRole, loading: authLoading, error }) => {
+        setUser(authUser);
+        setRole(userRole);
+        setLoading(authLoading);
+        if (error) {
+          setAuthError(error.message || 'Authentication listener error');
+        }
+      }
+    );
+    return () => unsubscribe();
   }, []);
 
+  const loginWithEmail = async (email, password) => {
+    setLoading(true);
+    setAuthError(null);
+    try {
+      await signInWithEmail(email, password);
+      return true;
+    } catch (error) {
+      setAuthError(error.message || 'Failed to login with email.');
+      setLoading(false);
+      return false;
+    }
+  };
+
+  const loginWithGoogle = async () => {
+    setLoading(true);
+    setAuthError(null);
+    try {
+      await signInWithGoogle();
+      return true;
+    } catch (error) {
+      // Ignore user-closed popups
+      if (
+        error.code !== 'auth/popup-closed-by-user' &&
+        error.code !== 'auth/cancelled-popup-request'
+      ) {
+        setAuthError(error.message || 'Failed to login with Google.');
+      }
+      setLoading(false);
+      return false;
+    }
+  };
+
+  const logout = async () => {
+    setLoading(true);
+    setAuthError(null);
+    try {
+      await signOutUser();
+    } catch (error) {
+      setAuthError(error.message || 'Failed to logout.');
+      setLoading(false);
+    }
+  };
 
   const value = {
     user,
-    setUser, // Will be replaced by Firebase auth methods
     role,
-    setRole,   // Will be managed by custom claims logic
     loading,
-    // login: async (email, password) => { /* ... */ },
-    // logout: async () => { /* ... */ },
-    // signup: async (email, password) => { /* ... */ },
+    authError,
+    loginWithEmail,
+    loginWithGoogle,
+    logout,
+    clearAuthError: () => setAuthError(null),
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// Custom hook to use the auth context
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };

@@ -1,11 +1,18 @@
-// components/layout/Navbar.jsx
+// components/layout/Navbar.jsx (snippet to add/modify for testing)
 import React from 'react';
 import Link from 'next/link';
-import './Navbar.css'; // We'll create this CSS file next
-// import { useAuth } from '../../hooks/useAuth'; // Will be used later
+import './Navbar.css';
+import { useAuth } from '../../contexts/AuthContext'; // <--- IMPORT
+import { useRouter } from 'next/router'; // <--- IMPORT for logout redirect
 
 const Navbar = () => {
-  // const { user, role } = useAuth(); // Example for later use
+  const { user, role, logout, loading } = useAuth(); // <--- USE AUTH
+  const router = useRouter(); // <--- USE ROUTER
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/login'); // Redirect to login after logout
+  };
 
   return (
     <nav className="navbar">
@@ -19,32 +26,40 @@ const Navbar = () => {
               Home
             </Link>
           </li>
-          <li className="navbar-item">
-            <Link href="/dashboard" className="navbar-links">
-              Dashboard
-            </Link>
-          </li>
+          {user && ( // Show dashboard link only if user is logged in
+            <li className="navbar-item">
+              <Link href="/dashboard" className="navbar-links">
+                Dashboard
+              </Link>
+            </li>
+          )}
           {/* More links based on auth state will be added later */}
-          {/* Example:
-          {user ? (
+          {!loading && user ? ( // <--- ADDED USER/ROLE DISPLAY AND LOGOUT
             <>
+              {role === 'processor' && ( // Example role-specific link
+                <li className="navbar-item">
+                  <Link href="/batches/new" className="navbar-links">
+                    New Batch
+                  </Link>
+                </li>
+              )}
               <li className="navbar-item">
                 <span className="navbar-user-info">
-                  {user.email} ({role})
+                  {user.email} ({role || 'No Role'})
                 </span>
               </li>
               <li className="navbar-item">
                 <button onClick={handleLogout} className="navbar-button">Logout</button>
               </li>
             </>
-          ) : (
+          ) : !loading && (
             <li className="navbar-item">
               <Link href="/login" className="navbar-links">
                 Login
               </Link>
             </li>
           )}
-          */}
+          {loading && <li className="navbar-item"><span className="navbar-user-info">Loading...</span></li>}
         </ul>
       </div>
     </nav>

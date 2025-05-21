@@ -1,0 +1,94 @@
+/* components/auth/LoginForm.module.css */
+.loginFormContainer {
+  max-width: 400px;
+  margin: var(--spacing-xl) auto;
+  padding: var(--spacing-lg);
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: var(--spacing-xs);
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.input {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #005bb5; /* Darker primary */
+}
+
+.button:disabled {
+  background-color: #a0c3e8; /* Lighter primary or grey */
+  cursor: not-allowed;
+}
+
+.googleButton {
+  background-color: #db4437; /* Google red */
+  margin-top: var(--spacing-sm);
+}
+
+.googleButton:hover:not(:disabled) {
+  background-color: #c23321; /* Darker Google red */
+}
+
+.divider {
+  text-align: center;
+  margin: var(--spacing-md) 0;
+  color: var(--text-light-color);
+  font-weight: bold;
+}
+
+.errorText {
+  color: var(--error-color);
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.signupLink {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+}
+
+.signupLink a {
+  color: var(--primary-color);
+  font-weight: bold;
+}
