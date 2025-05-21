@@ -1,0 +1,28 @@
+/* styles/variables.css */
+:root {
+  --primary-color: #2b3072;
+  --secondary-color: #2e5575;
+  --accent-color: #ff5b35;
+
+  --text-color: #333;
+  --text-light-color: #777;
+  --background-color: #f4f6f8;
+  --surface-color: #ffffff;
+  --border-color: #eaeaea;
+
+  --error-color: #DC143C;
+  --success-color: #DAF7A6;
+  --warning-color: #FFC300;
+
+  --font-family-main: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  --border-radius: 4px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
