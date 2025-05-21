@@ -1,5 +1,9 @@
+Core Principles:
+Iterative Development: Build and test features in small, manageable chunks.
+MVP First: Focus on core functionality first, then add enhancements.
+Test as You Go: Manually test each piece of functionality immediately after implementation. For a larger project, you'd integrate unit/integration tests, but for this plan, we'll focus on manual verification.
+Firebase First: Set up Firebase early as it's central to data and auth.
 Development Plan: Step-by-Step
-
 Step 0: Project Setup & Core Infrastructure
 Goal: Initialize the Next.js project, set up Firebase, and create basic layout and auth context.
 What to work on:
@@ -69,7 +73,6 @@ Upon successful login, the user should be redirected to /dashboard.
 AuthContext should now reflect the logged-in user and their role (e.g., "processor"). Display this on the Navbar or Dashboard for testing.
 Logout functionality should work and redirect to /login.
 Try accessing /dashboard directly while logged out; RoleGuard should redirect to /login.
-
 Step 2: Core Batch Functionality - Processor: Create & View Active Batches
 Goal: Allow "Processor" role users to create new batches and view active/priority batches.
 What to work on:
@@ -228,3 +231,4 @@ How to Test:
 Security: Attempt various operations in Firestore directly (e.g., using browser dev tools or a script) that should be disallowed by rules to confirm they fail.
 UI: Click through the entire application on different screen sizes. Check for visual bugs or awkward interactions.
 Roles: Log in as each role. Perform all actions available to that role and attempt actions not available to it. Ensure everything behaves as expected.
+This step-by-step plan provides a structured approach. Remember that some tasks might overlap, and you might discover the need for adjustments as you build. The key is to build iteratively, test frequently, and keep the user roles and data flow in mind at each step.
