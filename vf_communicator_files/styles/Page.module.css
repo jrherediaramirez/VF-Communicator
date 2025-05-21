@@ -1,0 +1,12 @@
+/* styles/Page.module.css */
+.container {
+  padding: var(--spacing-lg) var(--spacing-md);
+  max-width: 900px; /* Or your preferred max width */
+  margin: 0 auto;
+}
+
+.container h1,
+.container h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-color); /* Ensure text color is set from variables.css */
+}

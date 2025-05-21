@@ -1,0 +1,100 @@
+/* components/batch/BatchDetailDrawer.module.css */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -450px; /* Start off-screen */
+  width: 420px;
+  height: 100vh;
+  background-color: var(--surface-color);
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+}
+
+.drawer.open {
+  right: 0; /* Slide in */
+}
+
+.drawerHeader {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa; /* Slightly different header background */
+}
+
+.drawerHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.statusBadge {
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 3px var(--spacing-xs);
+  border-radius: var(--border-radius);
+  color: white;
+  font-size: 0.75em;
+}
+/* Replicate status colors from BatchRow.module.css or centralize them */
+.statusBadge.mixing { background-color: #3498db; }
+.statusBadge.complete { background-color: #f1c40f; }
+.statusBadge.awaitingQA { background-color: #e67e22; }
+.statusBadge.approved { background-color: var(--success-color); }
+.statusBadge.onhold { background-color: #95a5a6; }
+.statusBadge.rejected { background-color: var(--error-color); }
+
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-light-color);
+  padding: 0 var(--spacing-xs);
+}
+.closeButton:hover {
+  color: var(--text-color);
+}
+
+.drawerContent {
+  padding: var(--spacing-md);
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.drawerContent h4 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.drawerContent p {
+  margin-bottom: var(--spacing-xs);
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+.drawerContent p strong {
+  color: var(--text-color);
+}
+
+
+.divider {
+  margin: var(--spacing-lg) 0;
+  border: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.errorText {
+  color: var(--error-color);
+  font-size: 0.9em;
+}

@@ -1,0 +1,69 @@
+/* components/batch/BatchRow.module.css */
+.batchRow td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.batchRow:hover {
+  background-color: #f9f9f9;
+}
+
+.status {
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  color: white;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+/* Status specific colors - add all from BATCH_STATUSES */
+.status.mixing { background-color: #3498db; } /* Blue */
+.status.complete { background-color: #f1c40f; } /* Yellow */
+.status.awaitingQA { background-color: #e67e22; } /* Orange */
+.status.approved { background-color: var(--success-color); } /* Green */
+.status.onhold { background-color: #95a5a6; } /* Grey */
+.status.rejected { background-color: var(--error-color); } /* Red */
+
+
+.actionButton {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  margin-right: var(--spacing-xs);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+}
+
+.detailsButton {
+  background-color: var(--text-light-color);
+  color: white;
+}
+.detailsButton:hover { background-color: #555; }
+
+.completeButton {
+  background-color: var(--primary-color);
+  color: white;
+}
+.completeButton:hover { background-color: #005bb5; }
+
+.startButton {
+  background-color: var(--secondary-color);
+  color: white;
+}
+.startButton:hover { background-color: #16a085; }
+
+.actionButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.rowError td {
+  color: var(--error-color);
+  background-color: rgba(231, 76, 60, 0.05);
+  text-align: center;
+  font-style: italic;
+}

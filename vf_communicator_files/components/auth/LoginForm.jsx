@@ -1,8 +1,9 @@
-// components/auth/LoginForm.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../contexts/AuthContext';
-import styles from './LoginForm.module.css';
+import styles from './LoginForm.module.css'
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');

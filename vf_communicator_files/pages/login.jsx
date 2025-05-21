@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import LoginForm from '../components/auth/LoginForm';
 import { useAuth } from '../contexts/AuthContext';
+import styles from '../styles/Page.module.css'; // Optional common page styles
 
 const LoginPage = () => {
   const { user, loading } = useAuth();
