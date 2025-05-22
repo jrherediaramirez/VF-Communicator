@@ -1,48 +1,45 @@
 // components/batch/BatchRow.jsx
-import React, { useState } from 'react'; // Keep useState for isLoading, error if needed locally
-import { useAuth } from '../../contexts/AuthContext';
-import { USER_ROLES, BATCH_STATUSES } from '../../constants';
-import { updateBatchStatus, startQATesting } from '../../lib/firebase/firestore';
-// BatchDetailDrawer is NO LONGER imported or used directly here
-import styles from './BatchRow.module.css';
+import React, { useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext'; //
+import { USER_ROLES, BATCH_STATUSES } from '../../constants'; //
+import { updateBatchStatus, startQATesting } from '../../lib/firebase/firestore'; //
+import styles from './BatchRow.module.css'; //
 
-// The placeholder BatchDetailDrawer definition that was here should be completely removed.
-
-const BatchRow = ({ batch, onOpenDrawer }) => { // Add onOpenDrawer prop
-  const { user, role } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  // isDrawerOpen state is REMOVED
+const BatchRow = ({ batch, onOpenDrawer }) => {
+  const { user, role } = useAuth(); //
+  const [isLoading, setIsLoading] = useState(false); //
+  const [error, setError] = useState(''); //
 
   const handleCompleteMixing = async () => {
-    if (!user || role !== USER_ROLES.PROCESSOR) return;
-    setIsLoading(true);
-    setError('');
+    if (!user || role !== USER_ROLES.PROCESSOR) return; //
+    setIsLoading(true); //
+    setError(''); //
     try {
-      await updateBatchStatus(batch.id, BATCH_STATUSES.COMPLETE, user.uid);
+      // Aligning with ProjectOverview.md: Processor moves status to 'awaitingQA'
+      await updateBatchStatus(batch.id, BATCH_STATUSES.AWAITING_QA, user.uid); //
     } catch (err) {
-      setError(err.message || 'Failed to complete mixing.');
-      console.error(err);
+      setError(err.message || 'Failed to complete mixing.'); //
+      console.error(err); //
     }
-    setIsLoading(false);
+    setIsLoading(false); //
   };
 
   const handleStartTesting = async () => {
-    if (!user || role !== USER_ROLES.QA) return;
-    setIsLoading(true);
-    setError('');
+    if (!user || role !== USER_ROLES.QA) return; //
+    setIsLoading(true); //
+    setError(''); //
     try {
-      await startQATesting(batch.id, user.uid);
+      await startQATesting(batch.id, user.uid); //
     } catch (err) {
-      setError(err.message || 'Failed to start testing.');
-      console.error(err);
+      setError(err.message || 'Failed to start testing.'); //
+      console.error(err); //
     }
-    setIsLoading(false);
+    setIsLoading(false); //
   };
 
   const formatTimestamp = (timestamp) => {
-    if (!timestamp) return 'N/A';
-    return timestamp.toDate ? timestamp.toDate().toLocaleString() : new Date(timestamp).toLocaleString();
+    if (!timestamp) return 'N/A'; //
+    return timestamp.toDate ? timestamp.toDate().toLocaleString() : new Date(timestamp).toLocaleString(); //
   };
 
   return (
@@ -55,35 +52,33 @@ const BatchRow = ({ batch, onOpenDrawer }) => { // Add onOpenDrawer prop
         <td>{formatTimestamp(batch.lastUpdated)}</td>
         <td>
           <button
-            onClick={() => onOpenDrawer(batch.id)} // Call the passed-in handler
+            onClick={() => onOpenDrawer(batch.id)}
             className={`${styles.actionButton} ${styles.detailsButton}`}
             disabled={isLoading}
           >
             Details
           </button>
-          {role === USER_ROLES.PROCESSOR && batch.status === BATCH_STATUSES.MIXING && (
+          {role === USER_ROLES.PROCESSOR && batch.status === BATCH_STATUSES.MIXING && ( //
             <button
-              onClick={handleCompleteMixing}
+              onClick={handleCompleteMixing} //
               className={`${styles.actionButton} ${styles.completeButton}`}
-              disabled={isLoading}
+              disabled={isLoading} //
             >
-              {isLoading ? 'Completing...' : 'Complete Mixing'}
+              {isLoading ? 'Processing...' : 'Mixing Complete'} 
             </button>
           )}
-          {role === USER_ROLES.QA && batch.status === BATCH_STATUSES.AWAITING_QA && !batch.qaCurrentId && (
+          {role === USER_ROLES.QA && batch.status === BATCH_STATUSES.AWAITING_QA && !batch.qaCurrentId && ( //
             <button
-              onClick={handleStartTesting}
+              onClick={handleStartTesting} //
               className={`${styles.actionButton} ${styles.startButton}`}
-              disabled={isLoading}
+              disabled={isLoading} //
             >
               {isLoading ? 'Starting...' : 'Start Testing'}
             </button>
           )}
         </td>
       </tr>
-      {error && <tr className={styles.rowError}><td colSpan="6">{error}</td></tr>}
-
-      {/* BatchDetailDrawer component is REMOVED from here */}
+      {error && <tr className={styles.rowError}><td colSpan="6">{error}</td></tr>} 
     </>
   );
 };
