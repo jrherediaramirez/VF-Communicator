@@ -102,3 +102,35 @@
 .errorText { color: var(--error-color); background-color: rgba(231, 76, 60, 0.1); }
 .successText { color: var(--success-color); background-color: rgba(46, 204, 113, 0.1); }
 .infoText { color: var(--text-light-color); background-color: #f0f2f5; }
+
+.divider {
+  margin: var(--spacing-lg) 0;
+  border: 0;
+  border-top: 1px dashed var(--border-color);
+}
+
+.batchActions {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid #e0e0e0; /* Solid separator */
+  display: flex;
+  flex-direction: column; /* Stack buttons or align side-by-side */
+  gap: var(--spacing-sm);
+}
+
+.batchActions h5 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-color);
+}
+
+.onHoldButton {
+  background-color: #f39c12; /* Warning color / Orange */
+  color: white;
+}
+.onHoldButton:hover:not(:disabled) { background-color: #e67e22; }
+
+.rejectBatchButton {
+  background-color: #555; /* Dark grey / Blackish */
+  color: white;
+}
+.rejectBatchButton:hover:not(:disabled) { background-color: #333; }

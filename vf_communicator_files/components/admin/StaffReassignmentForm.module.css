@@ -1,0 +1,68 @@
+/* components/admin/StaffReassignmentForm.module.css */
+.reassignmentForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: #fdfdfd;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.select,
+.input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  align-self: flex-start;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #005bb5;
+}
+
+.button:disabled {
+  background-color: #a0c3e8;
+  cursor: not-allowed;
+}
+
+.errorText, .successText {
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.9em;
+}
+.errorText { color: var(--error-color); background-color: rgba(231, 76, 60, 0.1); }
+.successText { color: var(--success-color); background-color: rgba(46, 204, 113, 0.1); }

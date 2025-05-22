@@ -18,7 +18,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container container">
         <Link href="/" className="navbar-logo">
-          BatchTrack
+          VF Connect
         </Link>
         <ul className="navbar-menu">
           <li className="navbar-item">

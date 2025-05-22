@@ -2,13 +2,14 @@
 
 export const BATCH_STATUSES = {
   MIXING: 'mixing',
-  COMPLETE: 'complete', // Processor marks mixing as complete, ready for QA submission
-  AWAITING_QA: 'awaitingQA', // Batch has samples submitted, waiting for QA decision
-  APPROVED: 'approved', // Batch approved by QA
-  DENIED: 'denied', // Sample status (batch remains awaitingQA or goes to on-hold/rejected)
-  ON_HOLD: 'on-hold', // Batch status for higher-level review
-  REJECTED: 'rejected', // Batch status, finalized as rejected
-  PENDING: 'pending', // Sample status before QA decision
+  COMPLETE: 'complete',
+  AWAITING_QA: 'awaitingQA',
+  APPROVED: 'approved',
+  ON_HOLD: 'on-hold',       // <-- Ensure this is present/added
+  REJECTED: 'rejected',     // <-- Ensure this is present/added
+  // Sample specific statuses (if you keep them here)
+  PENDING: 'pending',
+  // DENIED: 'denied', // Sample result, batch status usually remains awaitingQA or changes
 };
 
 export const USER_ROLES = {
