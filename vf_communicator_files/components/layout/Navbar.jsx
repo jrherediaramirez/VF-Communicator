@@ -1,17 +1,18 @@
-// components/layout/Navbar.jsx (snippet to add/modify for testing)
+// components/layout/Navbar.jsx
 import React from 'react';
 import Link from 'next/link';
 import './Navbar.css';
-import { useAuth } from '../../contexts/AuthContext'; // <--- IMPORT
-import { useRouter } from 'next/router'; // <--- IMPORT for logout redirect
+import { useAuth } from '../../contexts/AuthContext';
+import { useRouter } from 'next/router';
+import { USER_ROLES } from '../../constants'; // Import USER_ROLES
 
 const Navbar = () => {
-  const { user, role, logout, loading } = useAuth(); // <--- USE AUTH
-  const router = useRouter(); // <--- USE ROUTER
+  const { user, role, logout, loading } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await logout();
-    router.push('/login'); // Redirect to login after logout
+    router.push('/login');
   };
 
   return (
@@ -26,23 +27,48 @@ const Navbar = () => {
               Home
             </Link>
           </li>
-          {user && ( // Show dashboard link only if user is logged in
+          {user && (
             <li className="navbar-item">
               <Link href="/dashboard" className="navbar-links">
                 Dashboard
               </Link>
             </li>
           )}
-          {/* More links based on auth state will be added later */}
-          {!loading && user ? ( // <--- ADDED USER/ROLE DISPLAY AND LOGOUT
+          
+          {/* Role-specific navigation */}
+          {role === USER_ROLES.PROCESSOR && (
+            <li className="navbar-item">
+              <Link href="/batches/new" className="navbar-links">
+                New Batch
+              </Link>
+            </li>
+          )}
+          
+          {role === USER_ROLES.QA && (
+            <li className="navbar-item">
+              <Link href="/qa-queue" className="navbar-links">
+                QA Queue
+              </Link>
+            </li>
+          )}
+          
+          {role === USER_ROLES.ADMIN && (
             <>
-              {role === 'processor' && ( // Example role-specific link
-                <li className="navbar-item">
-                  <Link href="/batches/new" className="navbar-links">
-                    New Batch
-                  </Link>
-                </li>
-              )}
+              <li className="navbar-item">
+                <Link href="/admin" className="navbar-links">
+                  Admin Panel
+                </Link>
+              </li>
+              <li className="navbar-item">
+                <Link href="/archive" className="navbar-links">
+                  Archive
+                </Link>
+              </li>
+            </>
+          )}
+          
+          {!loading && user ? (
+            <>
               <li className="navbar-item">
                 <span className="navbar-user-info">
                   {user.email} ({role || 'No Role'})
